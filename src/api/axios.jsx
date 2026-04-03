@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 
-// ⚠️ We cannot use hooks directly here
-// so we create a function instead
+
 
 export const createAPI = (getToken) => {
   const API = axios.create({
@@ -10,6 +9,7 @@ export const createAPI = (getToken) => {
   });
 
   API.interceptors.request.use(async (config) => {
+  try {
     const token = await getToken();
 
     if (token) {
@@ -17,7 +17,11 @@ export const createAPI = (getToken) => {
     }
 
     return config;
-  });
+  } catch (err) {
+    console.log("Token error:", err);
+    return config;
+  }
+});
 
   return API;
 };
