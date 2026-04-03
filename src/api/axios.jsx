@@ -6,7 +6,7 @@ import { useAuth } from "@clerk/clerk-react";
 
 export const createAPI = (getToken) => {
   const API = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: import.meta.env.VITE_API_URL,
   });
 
   API.interceptors.request.use(async (config) => {
